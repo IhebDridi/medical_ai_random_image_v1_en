@@ -13,7 +13,7 @@ def survey():
 
     file_path = "questionarre/english_questionarre_slider.json"
 
-    st.title("Survey")
+    st.title("Umfrage")
 
 
     questions = []
@@ -21,10 +21,10 @@ def survey():
         with open(file_path, "r", encoding="utf-8") as file:
             questions = json.load(file)  # Read JSON file
     except FileNotFoundError:
-        st.error("❌ The file was not found. Please check the file path.")
+        st.error("❌ Die Datei wurde nicht gefunden. Bitte überprüfen Sie den Pfad.")
         return
     except json.JSONDecodeError:
-        st.error("❌ Error loading JSON file. Please check the file format.")
+        st.error("❌ Fehler beim Laden der JSON-Datei. Bitte überprüfen Sie das Format.")
         return
 
     # Store responses
@@ -32,7 +32,7 @@ def survey():
         st.session_state["survey"]["responses"] = {}
 
     options_final = [
-      "Strong disapproval",  "Disapproval", "Neutral",  "Approval", "Strong approval"
+      "Starke Ablehnung",  "Ablehnung", "Neutral",  "Zustimmung", "Starke Zustimmung"
 
              ]
 
@@ -48,14 +48,14 @@ def survey():
     #         responses[q_key]=selected_option
 
     with st.form(key="my_form"):
-        st.markdown("Please enter your ID")
+        st.markdown("Bitte geben Sie Ihre ID ein")
         uuid = st.text_input("ID", value=st.session_state["survey"].get("ID", ""))
         #age = st.number_input("Alter", value=st.session_state["survey"].get("age", 18), min_value=0, max_value=100)
        # age = st.number_input("Alter", value=st.session_state["survey"].get("age", 18), min_value=0, max_value=100)
 
         
         st.subheader("",divider='gray')
-        st.markdown("Please read each of these statements carefully and consider whether or not it applies to you personally for the last 6 months.")
+        st.markdown("Lesen Sie bitte jede dieser Aussagen aufmerksam durch und überlegen Sie, ob diese Aussage auf Sie persönlich für die letzten 6 Monate zutrifft oder nicht.")
         st.markdown("")
         #st.subheader("",divider='gray')
 
@@ -68,12 +68,12 @@ def survey():
             responses[q_key]=selected_option
 
         # Submit button
-        submit_button = st.form_submit_button("Submit")
+        submit_button = st.form_submit_button("Absenden")
 
     if submit_button:
         
         if uuid == "":
-            st.error("Please enter your ID.")
+            st.error("Bitte geben Sie Ihre ID ein.")
 
         
         else:
@@ -83,7 +83,7 @@ def survey():
             #st.session_state["survey"]["skin_color"] = skin_color
             st.session_state["survey"].update(responses)
             st.session_state["page"] = "chat"
-            st.success("Thank you very much for your answers.!")
+            st.success("Vielen Dank für Ihre Antworten!")
             #st.write("### Ihre Auswahl:")
         
 
@@ -91,7 +91,7 @@ def survey():
 
             for idx, q in enumerate(questions):
                 selected_options = st.session_state["survey"]["responses"].get(f"q{idx}", [])
-                st.write(f"**Q{idx}:** {', '.join(selected_options) if selected_options else 'No option was selected'}")
+                st.write(f"**Q{idx}:** {', '.join(selected_options) if selected_options else 'Keine Auswahl'}")
 
             st.session_state["page"] = "chat"
             print('Survey Data: ',st.session_state["survey"] )
