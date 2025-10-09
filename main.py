@@ -77,12 +77,12 @@ def main():
             #print(f"skin: {skin_color} and gender: {gender}")
             #image_path = get_images(skin_color,gender)
             print('In Chat page: ',image_path)
-            st.title('Bild und Chat')
+            st.title('Image and chat')
                     #this is a placeholder for image upload
             st.session_state["saved_image"]=image_path  #update state.saved_image with image path
                     
-            with st.status("Bild hochladen, bitte warten.."):
-                st.write("Daten senden")
+            with st.status("Uploading image, please wait."):
+                st.write("Sending data")
                 initialize(image_path)  #Pass the image path during initialization
                     
         decision() #this loads the chat and buttons
