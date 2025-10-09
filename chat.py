@@ -4,25 +4,25 @@ import time
 #@st.dialog("Sind Sie sicher?")
 def appointment_dialog():
     
- with st.popover("Chat beenden"):
-    st.markdown("Sind Sie sicher?")
-    if st.button("Ja"):
-        st.session_state["button_clicked"]="Ja"
+ with st.popover("End chat"):
+    st.markdown("Are you sure?")
+    if st.button("Yes"):
+        st.session_state["button_clicked"]="Yes"
         print("Button Clicked")
         st.write(f"You decided for: {st.session_state['button_clicked']}")
         st.session_state["page"] = "thanks"
         st.rerun()
     
-    if st.button("Nein"):
-        st.session_state["button_clicked"]="Nein"
+    if st.button("No"):
+        st.session_state["button_clicked"]="No"
         st.rerun()
 
 
 def create_appointment_bttns(): 
-    with st.popover('Möchten Sie einen Arzttermin vereinbaren?', use_container_width=True):
-        st.button("Ja", key="btn1",
-                  on_click=lambda: st.session_state.update(button_clicked="Termin vereinbaren"), use_container_width=True)
-        st.button("Nein", key="btn2",
+    with st.popover('Would you like to make an appointment with a doctor?', use_container_width=True):
+        st.button("Yes", key="btn1",
+                  on_click=lambda: st.session_state.update(button_clicked="Make an appointment"), use_container_width=True)
+        st.button("No", key="btn2",
                   on_click=lambda: st.session_state.update(button_clicked="Do not make appointment"), use_container_width=True)
 
 def get_assistant_response():
@@ -35,11 +35,11 @@ def chat_page():
         st.session_state.messages = st.session_state.assistant.messages
     
     st.subheader("Chat", divider="gray")
-    st.markdown("Lesen Sie bitte jede dieser Aussagen aufmerksam durch und überlegen Sie, ob diese Aussage auf Sie persönlich für die letzten 6 Monate zutrifft oder nicht.")
+    st.markdown("Please read each of these statements carefully and consider whether or not it applies to you personally for the last 6 months.")
    # st.markdown("Schildern Sie dem Assistenten Ihre Situation. Sie können auch einen Termin bei unserem Arzt buchen")
 
     with st.chat_message("assistant"): 
-        st.markdown("Hallo! Wie kann ich Ihnen helfen?")
+        st.markdown("Hello! How may I help you?")
 
 
     # ✅ Display chat messages from session state
@@ -47,7 +47,7 @@ def chat_page():
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
     
-    if prompt := st.chat_input("Stellen Sie eine Frage"):
+    if prompt := st.chat_input("Ask a question"):
         
         with st.chat_message("user"):
             st.markdown(prompt)
@@ -56,7 +56,7 @@ def chat_page():
         st.session_state.messages.append({"role": "user", "content": prompt})
 
         # ✅ Get assistant response and store it (prevent duplicate display)
-        with st.spinner("Einen Moment bitte"):
+        with st.spinner("One moment, please"):
             assistant_response = get_assistant_response()
             st.session_state.messages.append({"role": "assistant", "content": assistant_response})
         

@@ -1,16 +1,16 @@
 import streamlit as st
 def welcome_page():
-    st.title("Herzlich willkommen!")
+    st.title("Welcome!")
     st.markdown("""
-    Mit dieser App können Sie eine erste Einschätzung zu auffälligen Hautveränderungen erhalten und darauf basierend entscheiden, ob Sie einen Arzttermin vereinbaren möchten.
+    This app allows you to obtain an initial assessment of conspicuous skin changes and, based on this, decide whether you would like to make an appointment with a doctor.
 
-    **So funktioniert es:**
-    1. **Fragebogen auf der folgenden Seite ausfüllen** – Damit die Interaktion mit dem künstlich intelligenten Assistenten besser auf Sie abgestimmt werden kann. 
+    **How it works:**
+    1. **Complete the questionnaire on the following page** – This allows the interaction with the artificial intelligence assistant to be better tailored to your needs. 
     \n
-    2. **Hochgeladenes Foto** -  Sehen Sie sich ein Bild Ihrer auffälligen Hautstelle genau an
+    2. **Uploaded photo** -  Take a close look at a picture of your noticeable skin area.
     \n
-    3. **Mit dem KI-Assistenten chatten** – Interagieren Sie mit dem künstlich intelligenten Assistenten und entscheiden Sie darauf basierend, ob Sie einen Arzttermin vereinbaren möchten.
+    3. **Chat with the AI assistant** – Interact with the artificial intelligence assistant and decide whether you would like to make a doctor's appointment based on the conversation.
     """)
-    if st.button("Zum Fragebogen"):
+    if st.button("To the questionnaire"):
         st.session_state["page"] = "survey"
         st.rerun()

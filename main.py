@@ -8,7 +8,7 @@ import uuid
 from utils import clean_latex_formatting, save_state_json
 from welcome import welcome_page
 #from survey import survey
-from german_survey import survey
+from english_survey import survey
 from chat import chat_page
 from images import get_images
 from decision_popover import decision

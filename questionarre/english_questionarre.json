@@ -1,0 +1,128 @@
+[
+    {
+        "question": "I spend a lot of time worrying about my health.",
+        "options": [
+            "I don't worry about my health.",
+            "I occasionally worry about my health.",
+            "I spend a lot of time worrying about my health.",
+            "I spend most of my time worrying about my health."
+        ]
+    },
+    {
+        "question": "I notice pain more than most other people (my age).",
+        "options": [
+            "I pay less attention to pain than most other people (my age).",
+            "I notice pain just as much as most other people (my age).",
+            "I notice pain more than most other people (my age).",
+            "I pay attention to pain in my body all the time."
+        ]
+    },
+    {
+        "question": "I constantly pay attention to physical sensations and changes.",
+        "options": [
+            "I am generally unaware of physical sensations or changes.",
+            "Sometimes I am aware of physical sensations or changes.",
+            "I am often aware of physical sensations or changes.",
+            "I am constantly aware of physical sensations or changes.."
+        ]
+    },
+    {
+        "question": "I often try to fight off thoughts of illness, but often fail.",
+        "options": [
+            "Not thinking about illness is not a problem for me.",
+            "Most of the time, I find it easy not to think about illness.",
+            "I often find it difficult to resist thoughts of illness.",
+            "The thoughts of illness are so strong that I no longer even try to fight them."
+        ]
+    },
+    {
+        "question": "I am often afraid of having a serious illness.",
+        "options": [
+            "I am not usually afraid of having a serious illness.",
+            "Sometimes I am afraid that I have a serious illness.",
+            "I am often afraid of having a serious illness.",
+            "I am always afraid of having a serious illness."
+        ]
+    },
+    {
+        "question": "I regularly have images in my mind in which I see myself as ill.",
+        "options": [
+            "I never have images in my mind in which I see myself as ill.",
+            "Sometimes images come to mind in which I see myself as ill.",
+            "I regularly have images in my mind in which I see myself as ill.",
+            "I constantly have images in my mind in which I see myself as ill."
+        ]
+    },
+    {
+        "question": "I often find it difficult to distract myself from thoughts about my health.",
+        "options": [
+            "I have no difficulty distracting myself from thoughts about my health.",
+            "Sometimes I find it difficult to distract myself from thoughts about my health.",
+            "I often find it difficult to distract myself from thoughts about my health.",
+            "Nothing can distract me from thoughts about my health."
+        ]
+    },
+    {
+        "question": "At first, I feel relieved when my doctor assures me that everything is fine, but after a while, the worries always return.",
+        "options": [
+            "I feel permanently relieved when my doctor assures me that everything is fine.",
+            "At first I feel relieved, but sometimes the worries return after a while..",
+            "At first I feel relieved, but after a while the worries always return.",
+            "I don't feel relieved when my doctor assures me that everything is fine."
+        ]
+    },
+    {
+        "question": "When I hear about an illness, I often think that I might have that illness.",
+        "options": [
+            "When I hear about an illness, I never think that I could have this illness myself.",
+            "When I hear about an illness, I sometimes think that I might have this illness.",
+            "When I hear about an illness, I often think that I might have this illness.",
+            "When I hear about an illness, I always think that I might have this illness."
+        ]
+    },
+    {
+        "question": "When I notice a physical sensation or change, I would prefer to have it checked out by a doctor immediately to make sure I don't have a serious illness.",
+        "options": [
+            "When I notice a physical sensation or change, I rarely ask myself what it means.",
+            "When I notice a physical sensation or change, I often wonder what it means.",
+            "When I notice a physical sensation or change, I always wonder what it means.",
+            "When I notice a physical sensation or change, I need to know what it means."
+        ]
+    },
+    {
+        "question": "I usually assume that I am at high risk of developing a serious illness.",
+        "options": [
+            "In general, I have the feeling that, that I have a very low risk of developing a serious illness.",
+            "In general, I have the feeling that, that I have a relatively low risk of developing a serious illness.",
+            "In general, I have the feeling that, that I have a moderate risk of developing a serious illness.",
+            "In general, I have the feeling that, that I am at high risk of developing a serious illness."
+        ]
+    },
+    {
+        "question": "I often think that I might have a serious illness.",
+        "options": [
+            "I never think that I could have a serious illness.",
+            "I sometimes think that I might have a serious illness.",
+            "I often think that I might have a serious illness.",
+            "I often think that I might have a serious illness."
+        ]
+    },
+    {
+        "question": "When I feel an unclear physical sensation, I often find it difficult to think about other things.",
+        "options": [
+            "When I feel an unclear physical sensation, it is not difficult for me to think about something else.",
+            "When I feel an unclear physical sensation, I sometimes find it difficult to think about anything else.",
+            "When I feel an unclear physical sensation, I often find it difficult to think about anything else.",
+            "When I feel an unclear physical sensation, I always find it difficult to think about anything else."
+        ]
+    },
+    {
+        "question": "My family/friends would say that I worry too much about my health.",
+        "options": [
+            "My family/friends would say, that I don't care enough about my health.",
+            "My family/friends would say, that I have a normal attitude towards my health.",
+            "My family/friends would say, that I worry too much about my health.",
+            "My family/friends would describe me as a “hypochondriac”."
+        ]
+    }
+]
