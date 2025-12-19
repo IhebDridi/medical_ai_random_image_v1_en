@@ -66,8 +66,9 @@ def chat_page():
 
     # ✅ Display chat messages from session state
     for msg in st.session_state.messages:
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
+        if msg["role"] != "system":  # ✅ hide system instructions from user
+            with st.chat_message(msg["role"]):
+                st.markdown(msg["content"])
     
     if prompt := st.chat_input("Ask a question"):
         
