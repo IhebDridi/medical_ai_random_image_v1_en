@@ -53,7 +53,12 @@ def get_assistant_response(prompt: str):
 
 def chat_page(): 
     if "messages" not in st.session_state:
-        st.session_state.messages = []
+        st.session_state.messages = [
+            {
+                "role": "assistant",
+                "content": "Hello! How may I help you?"
+            }
+        ]
         st.session_state.messages.extend(st.session_state.assistant.messages)
     
     st.subheader("Chat", divider="gray")
