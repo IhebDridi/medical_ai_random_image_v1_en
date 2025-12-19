@@ -51,66 +51,47 @@ def get_assistant_response(prompt: str):
         )
 
 
-def chat_page(): 
-    if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {
-                "role": "assistant",
-                "content": "Hello! How may I help you?"
-            }
-        ]
-        st.session_state.messages.extend(st.session_state.assistant.messages)
-    
+def chat_page():
     st.subheader("Chat", divider="gray")
     st.markdown(
         "Please read each of these statements carefully and consider whether or not it applies to you personally for the last 6 months."
     )
 
-        
-    with st.chat_message("assistant"): 
-        st.markdown("Hello! How may I help you?")
-    #DDEBUG
-    #with st.chat_message("assistant"): 
-    #    st.markdown("Hello! How may I help you?")
-
-    # ✅ Display chat messages from session state
+    # ✅ Initialize messages ONCE
     if "messages" not in st.session_state:
-        st.session_state.messages = [
-            # ✅ system instruction (hidden from UI)
-            {
-                "role": "system",
-                "content": st.session_state.system_instruction
-            },
-            # ✅ initial assistant greeting (shown to user)
-            {
-                "role": "assistant",
-                "content": "Hello! How may I help you?"
-            }
-        ]
-    if prompt := st.chat_input("Ask a question"):
-        
-        with st.chat_message("user"):
-            st.markdown(prompt)
+        st.session_state.messages = []
 
-        # ✅ Append user message to session state
+    # ✅ Render ALL previous messages EVERY run
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
+    # ✅ Static greeting (UI-only, stays fixed)
+    with st.chat_message("assistant"):
+        st.markdown("Hello! How may I help you?")
+
+    # ✅ User input
+    if prompt := st.chat_input("Ask a question"):
+        # Store user message
         st.session_state.messages.append({
             "role": "user",
             "content": prompt
         })
 
-        # ✅ Get assistant response
+        # Immediately render user message
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        # Get assistant response
         with st.spinner("One moment, please"):
             assistant_response = get_assistant_response(prompt)
 
-        # ✅ Append assistant message to session state
+        # Store assistant message
         st.session_state.messages.append({
             "role": "assistant",
             "content": assistant_response
         })
-        
+
+        # Render assistant message
         with st.chat_message("assistant"):
             st.markdown(assistant_response)
-
-    with st.container():
-        if st.session_state.messages: 
-            appointment_dialog()
