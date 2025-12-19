@@ -16,6 +16,7 @@ from thanks import thank_you_page
 from config import ASSISTANT_ID
 from images import save_upload_images
 from sciebo_uploader import Sciebo
+from simple_chat_page import simple_chat_page
 
 import llm_test
 llm_test.test_llm()
@@ -54,54 +55,7 @@ def initialize(image_path):
 
 
 def main():
-    if "page" not in st.session_state:
-        st.session_state["page"] = "welcome"
-
-    if st.session_state["page"] == "welcome":
-        welcome_page()
-
-    elif st.session_state["page"] == "survey":
-        survey()
-        save_state_json()
-    elif st.session_state["page"] == "chat":
-        survey_data = st.session_state.get("survey", {})
-       #skin_color = survey_data.get("skin_color", "default")
-       # gender=survey_data.get("gender", "o")
-        #print(skin_color)  # Assuming "skin_color" is the key for the skin color data
-        #print(f"skin: {skin_color} and gender: {gender}")
-        #image_path = get_images(skin_color,gender)
-        image_path="skin_images/05ec667cfd8a73d9d51b341af2ca9dc1.jpg"
-        print('In Chat page: ',image_path)
-        with st.container():
-            survey_data = st.session_state.get("survey", {})
-            #skin_color = survey_data.get("skin_color", "default")
-            #gender=survey_data.get("gender", "o")
-            #print(skin_color)  # Assuming "skin_color" is the key for the skin color data
-            #print(f"skin: {skin_color} and gender: {gender}")
-            #image_path = get_images(skin_color,gender)
-            print('In Chat page: ',image_path)
-            st.title('Image and chat')
-                    #this is a placeholder for image upload
-            st.session_state["saved_image"]=image_path  #update state.saved_image with image path
-                    
-            with st.status("Uploading image, please wait."):
-                st.write("Sending data")
-                initialize(image_path)  #Pass the image path during initialization
-                    
-        decision() #this loads the chat and buttons
-        chat_page()
-        save_state_json()
-
-    elif st.session_state["page"] == "thanks":
-        save_state_json()
-        thank_you_page()
-        image_path = st.session_state["saved_image"]
-        uuid = st.session_state.get("uuid")
-        #Sciebo.upload_image(image_path,uuid)
-        Sciebo.upload_state_data(uuid)
-            #st.write("Saving Image to Sciebo")
-           # st.write("Saving Suvery info to Sciebo")
-            #Sciebo.upload_state_data(uuid)
+    simple_chat_page()
       
       
 
