@@ -55,7 +55,7 @@ def initialize(image_path):
 
 
 def main():
-    simple_chat_page()
+    #simple_chat_page()
     if "page" not in st.session_state:
         st.session_state["page"] = "welcome"
 
