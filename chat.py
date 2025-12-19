@@ -52,8 +52,6 @@ def get_assistant_response(prompt: str):
 
 
 def chat_page(): 
-    with st.chat_message("assistant"): 
-        st.markdown("Hello! How may I help you?")
     if "messages" not in st.session_state:
         st.session_state.messages = [
             {

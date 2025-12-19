@@ -44,7 +44,7 @@ class XAIAssistant:
 
         # ✅ Call OpenAI chat completions (this is the proven working logic)
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             messages=self.messages
         )
 
