@@ -33,7 +33,7 @@ class XAIAssistant:
             self.assistant = self.client.beta.assistants.create(
                 instructions=instructions,
                 model="gpt-4o-mini",
-                tools=[{"type": "vision"}]  # ✅ FIX: enable vision
+                tools=[]  # ✅ FIX: enable vision
             )
 
             self.initialize_thread_with_survey_and_image()
