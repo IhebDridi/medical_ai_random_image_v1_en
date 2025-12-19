@@ -11,16 +11,18 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 def test_llm():
     print("SENDING REQUEST TO OPENAI...")
 
-    response = client.responses.create(
+    response = client.chat.completions.create(
         model="gpt-4o",
-        input="Say hello and explain in one sentence what you can do."
+        messages=[
+            {"role": "user", "content": "Say hello and explain in one sentence what you can do."}
+        ]
     )
 
     print("RAW RESPONSE OBJECT:")
     print(response)
 
     print("\nEXTRACTED TEXT:")
-    print(response.output_text)
+    print(response.choices[0].message.content)
 
 if __name__ == "__main__":
     test_llm()
