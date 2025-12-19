@@ -13,11 +13,16 @@ def appointment_dialog():
             # ✅ DO NOT clear messages here
             st.session_state.conversation_started = False
 
+            # added value to the clicked button
+            st.session_state["button_clicked"] = "Yes"
+
             # ✅ Let the normal page transition trigger saving
             st.session_state["page"] = "thanks"
             st.rerun()
 
         if st.button("No"):
+
+            # added value to the clicked button
             st.session_state["button_clicked"] = "No"
             st.rerun()
 
