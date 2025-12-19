@@ -1,9 +1,12 @@
 from openai import OpenAI
-import os
+import streamlit as st
+
+
+OPENAI_API_KEY = st.secrets["openai"]["SECRET_KEY"]
 
 # Use exactly the same way you load your key elsewhere
 # If you use st.secrets, temporarily paste the key directly for this test
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 def test_llm():
     print("SENDING REQUEST TO OPENAI...")
