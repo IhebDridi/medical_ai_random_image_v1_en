@@ -10,9 +10,10 @@ def appointment_dialog():
     with st.popover("End chat"):
         st.markdown("Are you sure?")
         if st.button("Yes"):
-            st.session_state["button_clicked"] = "Yes"
+            # ✅ DO NOT clear messages here
             st.session_state.conversation_started = False
-            st.session_state.pop("messages", None)
+
+            # ✅ Let the normal page transition trigger saving
             st.session_state["page"] = "thanks"
             st.rerun()
 
