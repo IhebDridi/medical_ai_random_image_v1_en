@@ -55,7 +55,7 @@ def survey():
 
         
         st.subheader("",divider='gray')
-        st.markdown("Please read each of these statements carefully and consider whether or not it applies to you personally for the last 6 months.")
+        st.markdown("Please read each of the following statements carefully and consider to what degree it has applied to you personally during the past six months.")
         st.markdown("")
         #st.subheader("",divider='gray')
 

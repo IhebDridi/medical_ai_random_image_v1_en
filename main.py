@@ -20,34 +20,34 @@ from sciebo_uploader import Sciebo
 
 def initialize(image_path):
     if "user_uuid" not in st.session_state:
-        #set_page_styling()
         user_uuid = str(uuid.uuid4())
         start_time = datetime.datetime.now().isoformat()
 
-        if not "assistant" in st.session_state:
+        # ✅ FIX: only create assistant once
+        if "assistant" not in st.session_state:
             if os.environ.get("SMOKE_TEST"):
                 st.session_state["assistant"] = None
             else:
                 survey_data = st.session_state.get("survey", {})
 
-                st.session_state["assistant"] = XAIAssistant(assistant_id=ASSISTANT_ID, image_path=image_path, survey_data=survey_data)
-            # Initialize the assistant
+                st.session_state["assistant"] = XAIAssistant(
+                    assistant_id=ASSISTANT_ID,
+                    image_path=image_path,
+                    survey_data=survey_data
+                )
 
         assistant = st.session_state["assistant"]
         print(f'Selected Image path during AI intialization: {image_path}')
-        assistant = st.session_state["assistant"]
-        if assistant: 
+        if assistant:
             print(f'Assistant object created successfully')
-        print(f'Selected Image path during AI intialization: {image_path}')
 
-        # Store the assistant's response or any other relevant information in the session state
+        # Store session metadata
         st.session_state["user_uuid"] = user_uuid
         st.session_state["start_time"] = start_time
-        
         st.session_state["saved_image"] = image_path
+
         save_state_json()
 
-        #save_state_json()
 
 
 def main():

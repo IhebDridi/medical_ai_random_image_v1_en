@@ -4,6 +4,7 @@ import json
 from typing import List, Dict
 from config import OPENAI_API_KEY
 
+
 class XAIAssistant:
     def __init__(self, assistant_id=None, image_path=None, survey_data=None):
         """
@@ -11,7 +12,7 @@ class XAIAssistant:
         Otherwise, it creates a new assistant with predefined instructions.
         """
         self.client = openai.OpenAI(api_key=OPENAI_API_KEY)
-        print('Open AI key: ',OPENAI_API_KEY)
+        print('Open AI key: ', OPENAI_API_KEY)
         self.thread = None
         self.messages = []
         self.survey_data = survey_data if survey_data else {}
@@ -30,8 +31,8 @@ class XAIAssistant:
 
             self.assistant = self.client.beta.assistants.create(
                 instructions=instructions,
-                model="gpt-4o-mini",  
-                tools=[]
+                model="gpt-4o-mini",
+                tools=[{"type": "vision"}]  # ✅ FIX: enable vision
             )
 
             self.initialize_thread_with_survey_and_image()
@@ -90,35 +91,38 @@ class XAIAssistant:
         if self.thread is None or self.thread.id is None:
             raise ValueError("Conversation thread is not initialized properly.")
 
-        self._create_message("user", msg)
-        run = self._create_run()
+        # ✅ FIX: store user message
+        self.messages.append({"role": "user", "content": msg})
 
-        while not run.status == 'completed':
-            time.sleep(1)
-            print(run.status)
-
-        return self._handle_run_completed(run)
-
-    def _create_message(self, role, content):
-        """Sends a message using OpenAI's Assistants API."""
-        return self.client.beta.threads.messages.create(
+        # ✅ FIX: send message to assistant
+        self.client.beta.threads.messages.create(
             thread_id=self.thread.id,
-            role=role,
-            content=[{"type": "text", "text": content}]
+            role="user",
+            content=[{"type": "text", "text": msg}]
         )
 
-    def _create_run(self):
-        """Starts and polls the assistant's response process."""
-        return self.client.beta.threads.runs.create_and_poll(
+        # ✅ FIX: no blocking loop
+        run = self.client.beta.threads.runs.create_and_poll(
             thread_id=self.thread.id,
             assistant_id=self.assistant.id,
         )
 
-    def _handle_run_completed(self, run):
+        return self._handle_run_completed()
+
+    def _handle_run_completed(self):
         """Handles the assistant's response after completing the conversation cycle."""
-        messages = self.client.beta.threads.messages.list(thread_id=self.thread.id)
-        #self.messages.append({"role": "assistant", "content": messages.data[0].content[0].text.value})
-        return messages.data[0].content[0].text.value
+        messages = self.client.beta.threads.messages.list(
+            thread_id=self.thread.id,
+            order="desc",
+            limit=1
+        )
+
+        response = messages.data[0].content[0].text.value
+
+        # ✅ FIX: store assistant response
+        self.messages.append({"role": "assistant", "content": response})
+
+        return response
 
     def extract_messages(self, messages: List) -> List[Dict[str, str]]:
         """Extracts and cleans messages from the assistant's responses."""
@@ -134,4 +138,4 @@ class XAIAssistant:
 
     def clean_latex_formatting(self, text: str) -> str:
         """Removes LaTeX formatting from the text output."""
-        return text.replace("\\(", "").replace("\\)", "")
+        return text.replace("\$", "").replace("\$", "")
