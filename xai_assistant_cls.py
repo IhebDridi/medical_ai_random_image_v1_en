@@ -32,7 +32,7 @@ class XAIAssistant:
 
             self.assistant = self.client.beta.assistants.create(
                 instructions=instructions,
-                model="gpt-4o-mini",
+                model="gpt-4o",
                 tools=[]  # ✅ FIX: enable vision
             )
 
@@ -123,6 +123,7 @@ class XAIAssistant:
         # ✅ FIX: store assistant response
         self.messages.append({"role": "assistant", "content": response})
         # DEBUG
+        print("RAW MESSAGES:", messages.data)
         response = messages.data[0].content[0].text.value
         print("ASSISTANT RESPONSE:", response)  # DEBUG ONLY
 
