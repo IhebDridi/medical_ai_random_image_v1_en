@@ -88,6 +88,7 @@ class XAIAssistant:
             )
 
     def chat(self, msg):
+        print("CHAT() CALLED WITH:", msg)
         """Sends a message to the assistant using the Assistants API and retrieves the response."""
         if self.thread is None or self.thread.id is None:
             raise ValueError("Conversation thread is not initialized properly.")
@@ -107,10 +108,12 @@ class XAIAssistant:
             thread_id=self.thread.id,
             assistant_id=self.assistant.id,
         )
+        print("RUN COMPLETED, STATUS:", run.status)
 
         return self._handle_run_completed()
 
     def _handle_run_completed(self):
+        print("FETCHING MESSAGES FROM THREAD")
         """Handles the assistant's response after completing the conversation cycle."""
         messages = self.client.beta.threads.messages.list(
             thread_id=self.thread.id,
