@@ -20,7 +20,11 @@ class XAIAssistant:
 
         if image_path:
             self.image_path = image_path
-            self.image_file_id = self.upload_image(image_path)  #  Upload image and get file_id
+            try:
+                self.image_file_id = self.upload_image(image_path)
+            except Exception as e:
+                print("IMAGE UPLOAD FAILED:", str(e))
+                self.image_file_id = None
         else:
             self.image_file_id = None
 
