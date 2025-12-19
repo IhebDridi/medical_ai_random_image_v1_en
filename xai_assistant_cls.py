@@ -1,153 +1,58 @@
-import openai
-import time
-import json
-from typing import List, Dict
+from openai import OpenAI
 import streamlit as st
 
 
 class XAIAssistant:
+    """
+    Simple LLM wrapper using OpenAI chat completions.
+    This replaces the broken Assistants-based implementation.
+    """
+
     def __init__(self, assistant_id=None, image_path=None, survey_data=None):
-        """
-        Initializes the XAIAssistant object. If an assistant_id is provided, it retrieves the existing assistant.
-        Otherwise, it creates a new assistant with predefined instructions.
-        """
-        OPENAI_API_KEY = st.secrets["openai"]["SECRET_KEY"]
-        self.client = openai.OpenAI(api_key=OPENAI_API_KEY)
-        #print('Open AI key: ', OPENAI_API_KEY)
-        self.thread = None
-        self.messages = []
-        self.survey_data = survey_data if survey_data else {}
+        # ✅ Initialize OpenAI client using Streamlit secrets
+        self.client = OpenAI(
+            api_key=st.secrets["openai"]["SECRET_KEY"]
+        )
 
-        if image_path:
-            self.image_path = image_path
-            try:
-                self.image_file_id = self.upload_image(image_path)
-            except Exception as e:
-                print("IMAGE UPLOAD FAILED:", str(e))
-                self.image_file_id = None
-        else:
-            self.image_file_id = None
+        # ✅ Load system instructions once
+        with open("instructions_t.txt", "r", encoding="utf-8") as f:
+            self.system_instruction = f.read()
 
-        if assistant_id:
-            self.assistant = self.client.beta.assistants.retrieve(assistant_id)
-        else:
-            with open("instructions_t.txt", "r", encoding="utf-8") as f:
-                instructions = f.read()
-
-            self.assistant = self.client.beta.assistants.create(
-                instructions=instructions,
-                model="gpt-4o",
-                tools=[]  # ✅ FIX: enable vision
-            )
-
-            self.initialize_thread_with_survey_and_image()
-
-    def upload_image(self, image_path):
-        """Uploads an image to OpenAI and returns the file ID."""
-        with open(image_path, "rb") as image_file:
-            response = self.client.files.create(
-                file=image_file,
-                purpose="vision"  #  Ensure the file is uploaded for vision tasks
-            )
-        return response.id  #  Returns file ID for later reference
-
-    def process_survey_data(self):
-        """Formats survey data as a readable string."""
-        if not self.survey_data:
-            return "No additional user survey data available."
-
-        survey_summary = "The user has provided the following survey responses:\n"
-        for key, value in self.survey_data.items():
-            survey_summary += f"- {key}: {value}\n"
-
-        name = self.survey_data.get("name", "User")
-        age = self.survey_data.get("age", "unknown age")
-        return f"The user's name is {name}, they are {age} years old.\n\n{survey_summary}"
-
-    def initialize_thread_with_survey_and_image(self):
-        """Initializes a conversation thread with survey data and an uploaded image file."""
-        initial_message_content = [
+        # ✅ Initialize conversation history with system message
+        self.messages = [
             {
-                "type": "text",
-                "text": self.process_survey_data()
+                "role": "system",
+                "content": self.system_instruction
             }
         ]
 
-        if self.image_file_id:
-            initial_message_content.append({
-                "type": "image_file",
-                "image_file": {
-                    "file_id": self.image_file_id  # way to reference an uploaded file
-                }
-            })
+        # ✅ Store survey data if provided (not yet injected, but preserved)
+        self.survey_data = survey_data if survey_data else {}
 
-        if self.thread is None:
-            self.thread = self.client.beta.threads.create(
-                messages=[
-                    {
-                        "role": "user",
-                        "content": initial_message_content
-                    }
-                ]
-            )
+        # ✅ Image path kept for compatibility (not uploaded)
+        self.image_path = image_path
 
-    def chat(self, msg):
-        print("CHAT() CALLED WITH:", msg)
-        """Sends a message to the assistant using the Assistants API and retrieves the response."""
-        if self.thread is None or self.thread.id is None:
-            raise ValueError("Conversation thread is not initialized properly.")
+    def chat(self, msg: str) -> str:
+        """
+        Send one user message to the LLM and return the assistant reply.
+        """
 
-        # ✅ FIX: store user message
-        #self.messages.append({"role": "user", "content": msg})
-
-        # ✅ FIX: send message to assistant
-        self.client.beta.threads.messages.create(
-            thread_id=self.thread.id,
-            role="user",
-            content=[{"type": "text", "text": msg}]
+        # ✅ Append user message
+        self.messages.append(
+            {"role": "user", "content": msg}
         )
 
-        # ✅ FIX: no blocking loop
-        run = self.client.beta.threads.runs.create_and_poll(
-            thread_id=self.thread.id,
-            assistant_id=self.assistant.id,
-        )
-        print("RUN COMPLETED, STATUS:", run.status)
-
-        return self._handle_run_completed()
-
-    def _handle_run_completed(self):
-        print("FETCHING MESSAGES FROM THREAD")
-        """Handles the assistant's response after completing the conversation cycle."""
-        messages = self.client.beta.threads.messages.list(
-            thread_id=self.thread.id,
-            order="desc",
-            limit=1
+        # ✅ Call OpenAI chat completions (this is the proven working logic)
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=self.messages
         )
 
-        response = messages.data[0].content[0].text.value
+        assistant_text = response.choices[0].message.content
 
-        # ✅ FIX: store assistant response
-        #self.messages.append({"role": "assistant", "content": response})
-        # DEBUG
-        print("RAW MESSAGES:", messages.data)
-        response = messages.data[0].content[0].text.value
-        print("ASSISTANT RESPONSE:", response)  # DEBUG ONLY
+        # ✅ Append assistant response
+        self.messages.append(
+            {"role": "assistant", "content": assistant_text}
+        )
 
-        return response
-
-    def extract_messages(self, messages: List) -> List[Dict[str, str]]:
-        """Extracts and cleans messages from the assistant's responses."""
-        result = []
-        for msg in messages:
-            content_text = " ".join(block.text.value for block in msg.content if block.type == "text")
-            cleaned_content = self.clean_latex_formatting(content_text)
-            result.append({
-                "role": msg.role,
-                "content": cleaned_content
-            })
-        return result
-
-    def clean_latex_formatting(self, text: str) -> str:
-        """Removes LaTeX formatting from the text output."""
-        return text.replace("\$", "").replace("\$", "")
+        return assistant_text
