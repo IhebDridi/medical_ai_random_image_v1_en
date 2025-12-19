@@ -1,51 +1,51 @@
 [
     {
-        "question": "I spend a lot of time worrying about my health"
+        "question": "I spend much of my time worrying about my health."
     },
     {
-        "question":   "I notice pain more than most other people (my age)."
+        "question":   "I notice aches/pains more than most other people (of my age)."
     },
     {
-        "question":  "I constantly pay attention to physical sensations and changes."
+        "question":  "I am often aware of bodily sensations or changes. "
     },
     {
-        "question":  "I often try to fight off thoughts of illness, but often fail."
+        "question":  "I try to resist thoughts of illness but am often unable to do so."
     },
     {
-        "question": "I am often afraid of having a serious illness."
+        "question": "I am often afraid that I have a serious illness."
  
     },
     {
-        "question": "I regularly have images in my mind in which I see myself as ill."
+        "question": "I frequently have images of myself being ill. "
 
     },
     {
-        "question":"I often find it difficult to distract myself from thoughts about my health."
+        "question":"I often have difficulty in taking my mind off thoughts about my health. "
         
     },
     {
-        "question": "At first, I feel relieved when my doctor assures me that everything is fine, but after a while, the worries always return."
+        "question": "I am initially relieved but the worries always return later. "
    
     },
     {
-        "question":  "When I hear about an illness, I often think that I might have that illness."
+        "question":  "If I hear about an illness I often think I have it myself. "
     },
     {
-        "question":   "When I notice a physical sensation or change, I would prefer to have it checked out by a doctor immediately to make sure I don't have a serious illness."
+        "question":   "If I have a bodily sensation or change I always wonder what it means. "
 
     },
     {
-        "question": "I usually assume that I am at high risk of developing a serious illness."
+        "question": "I usually feel at high risk for developing a serious illness."
     
     },
     {
-        "question":  "I often think that I might have a serious illness."
+        "question":  "I often think I have a serious illness."
     },
     {
-        "question": "When I feel an unclear physical sensation, I often find it difficult to think about other things."
+        "question": "If I notice an unexplained bodily sensation I often find it difficult to think about other things. "
     },
     {
-        "question": "My family/friends would say that I worry too much about my health."
+        "question": "My family/friends would say I worry too much about my health.   "
     }
     
 
