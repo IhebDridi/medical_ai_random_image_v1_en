@@ -65,11 +65,19 @@ def chat_page():
     #    st.markdown("Hello! How may I help you?")
 
     # ✅ Display chat messages from session state
-    for msg in st.session_state.messages:
-        if msg["role"] != "system":  # ✅ hide system instructions from user
-            with st.chat_message(msg["role"]):
-                st.markdown(msg["content"])
-    
+    if "messages" not in st.session_state:
+        st.session_state.messages = [
+            # ✅ system instruction (hidden from UI)
+            {
+                "role": "system",
+                "content": st.session_state.system_instruction
+            },
+            # ✅ initial assistant greeting (shown to user)
+            {
+                "role": "assistant",
+                "content": "Hello! How may I help you?"
+            }
+        ]
     if prompt := st.chat_input("Ask a question"):
         
         with st.chat_message("user"):
