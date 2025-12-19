@@ -122,6 +122,9 @@ class XAIAssistant:
 
         # ✅ FIX: store assistant response
         self.messages.append({"role": "assistant", "content": response})
+        # DEBUG
+        response = messages.data[0].content[0].text.value
+        print("ASSISTANT RESPONSE:", response)  # DEBUG ONLY
 
         return response
 
