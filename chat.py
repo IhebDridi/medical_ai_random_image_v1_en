@@ -57,18 +57,19 @@ def chat_page():
         "Please read each of these statements carefully and consider whether or not it applies to you personally for the last 6 months."
     )
 
-    # ✅ Initialize messages ONCE
+    # Initialize messages ONCE
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # ✅ Render ALL previous messages EVERY run
+    # Render ALL previous messages EVERY run
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    # ✅ Static greeting (UI-only, stays fixed)
-    with st.chat_message("assistant"):
-        st.markdown("Hello! How may I help you?")
+    # Show greeting ONLY before first user message
+    if not st.session_state.messages:
+        with st.chat_message("assistant"):
+            st.markdown("Hello! How may I help you?")
 
     # ✅ User input
     if prompt := st.chat_input("Ask a question"):
@@ -95,3 +96,7 @@ def chat_page():
         # Render assistant message
         with st.chat_message("assistant"):
             st.markdown(assistant_response)
+        # End chat dropdown (popover)
+        with st.container():
+            if st.session_state.messages:
+                appointment_dialog()
