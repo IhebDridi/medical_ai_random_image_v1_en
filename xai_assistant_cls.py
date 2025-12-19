@@ -98,7 +98,7 @@ class XAIAssistant:
             raise ValueError("Conversation thread is not initialized properly.")
 
         # ✅ FIX: store user message
-        self.messages.append({"role": "user", "content": msg})
+        #self.messages.append({"role": "user", "content": msg})
 
         # ✅ FIX: send message to assistant
         self.client.beta.threads.messages.create(
@@ -128,7 +128,7 @@ class XAIAssistant:
         response = messages.data[0].content[0].text.value
 
         # ✅ FIX: store assistant response
-        self.messages.append({"role": "assistant", "content": response})
+        #self.messages.append({"role": "assistant", "content": response})
         # DEBUG
         print("RAW MESSAGES:", messages.data)
         response = messages.data[0].content[0].text.value
