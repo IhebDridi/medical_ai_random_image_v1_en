@@ -60,9 +60,9 @@ def chat_page():
     st.markdown(
         "Please read each of these statements carefully and consider whether or not it applies to you personally for the last 6 months."
     )
-
-    with st.chat_message("assistant"): 
-        st.markdown("Hello! How may I help you?")
+    #DDEBUG
+    #with st.chat_message("assistant"): 
+    #    st.markdown("Hello! How may I help you?")
 
     # ✅ Display chat messages from session state
     for msg in st.session_state.messages:
