@@ -2,7 +2,7 @@ import openai
 import time
 import json
 from typing import List, Dict
-from config import OPENAI_API_KEY
+import streamlit as st
 
 
 class XAIAssistant:
@@ -11,8 +11,9 @@ class XAIAssistant:
         Initializes the XAIAssistant object. If an assistant_id is provided, it retrieves the existing assistant.
         Otherwise, it creates a new assistant with predefined instructions.
         """
+        OPENAI_API_KEY = st.secrets["openai"]["SECRET_KEY"]
         self.client = openai.OpenAI(api_key=OPENAI_API_KEY)
-        print('Open AI key: ', OPENAI_API_KEY)
+        #print('Open AI key: ', OPENAI_API_KEY)
         self.thread = None
         self.messages = []
         self.survey_data = survey_data if survey_data else {}
