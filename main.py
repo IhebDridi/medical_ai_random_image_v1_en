@@ -17,6 +17,9 @@ from config import ASSISTANT_ID
 from images import save_upload_images
 from sciebo_uploader import Sciebo
 
+import llm_test
+llm_test.test_llm()
+
 
 def initialize(image_path):
     if "user_uuid" not in st.session_state:
